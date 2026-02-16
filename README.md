@@ -1,24 +1,33 @@
 # BB Insider
 
-CLI utilities for BuzzerBeater match parsing, buzzerbeater detection, and team-level analysis.
+CLI tools for extracting match data and tracking buzzerbeaters.
 
-## Requirements
+## Setup (once)
 
-- Python 3.10+
-- `uv` (recommended): https://docs.astral.sh/uv/
-
-## Quick Start (uv)
-
-`uv run` automatically locks/syncs the project and creates `.venv` if needed.
-
-1. Create a local `.env` file with:
+1. Install `uv`: https://docs.astral.sh/uv/
+2. Create a local `.env` in repo root:
    - `BB_USERNAME=...`
    - `BB_SECURITY_CODE=...`
-2. Run a command:
-   - `uv run bbinsider --matchid 123786926 --print-stats --print-events`
-3. Run commands with:
-   - `uv run <command> ...`
-   - See options with: `uv run <command> --help`
+3. Run commands from repo root with `uv run <command> ...`
+   - Full options for any command: `uv run <command> --help`
+
+If your machine blocks writes to the default uv cache, use:
+
+```bash
+UV_CACHE_DIR=./.uv-cache uv run <command> ...
+```
+
+## Core Tracking Commands
+
+### `bbinsider`
+Parse a single match and print stats/events or export JSON.
+
+Useful flags:
+- `--matchid` (required)
+- `--print-events`
+- `--print-stats`
+- `--verify`
+- `--out` (default: `output/reports/<matchid>.json`)
 
 Example:
 
@@ -26,28 +35,100 @@ Example:
 uv run bbinsider --matchid 123786926 --print-stats --print-events
 ```
 
-## Suggested First-Run Order
+### `bbinsider-buzzerbeaters`
+Detect buzzerbeaters in one match.
 
-1. Parse one match and inspect output:
-   - `uv run bbinsider --matchid 123786926 --print-stats --print-events`
-2. Detect buzzerbeaters for a known buzzerbeater match:
-   - `uv run bbinsider-buzzerbeaters --matchid <MATCH_ID_WITH_BUZZERBEATER> --details`
-3. Build team buzzerbeater history across seasons:
-   - `uv run bbinsider-team-buzzerbeaters --teamid <TEAM_ID> --from-first-active --auto-first-season --season-to <SEASON>`
-4. Generate description text from the DB:
-   - `uv run bbinsider-buzzerbeater-descriptions --teamid <TEAM_ID> --summary`
+Useful flags:
+- `--matchid` (required)
+- `--details` (show linked shot/free-throw details)
+- `--json`
 
-Additional Commands:
+Known buzzerbeater example:
 
-- Team metadata lookup:
-  - `uv run bbinsider-team-info --teamid <TEAM_ID>`
-- Visual analysis:
-  - `uv run bbinsider-shotchart <MATCH_ID> --out output/charts/shot_<MATCH_ID>.png`
-  - `uv run bbinsider-team-shot-distance-hist --teamid <TEAM_ID> --count 20`
+```bash
+uv run bbinsider-buzzerbeaters --matchid <MATCH_ID_WITH_BUZZERBEATER> --details
+```
 
-## Outputs And Privacy
+### `bbinsider-team-buzzerbeaters`
+Scan team matches and build/update buzzerbeater records in the local DB.
+
+Useful flags:
+- `--teamid` (required)
+- season scope: `--season`, `--seasons`, or `--season-from` + `--season-to`
+- `--auto-first-season`
+- `--from-first-active`
+- `--db` (default: `data/buzzerbeaters.db`)
+- `--tui`
+
+Example (multi-season tracking):
+
+```bash
+uv run bbinsider-team-buzzerbeaters \
+  --teamid <TEAM_ID> \
+  --from-first-active \
+  --auto-first-season \
+  --season-to <SEASON>
+```
+
+### `bbinsider-buzzerbeater-descriptions`
+Query the DB and render human-readable buzzerbeater lines and summaries.
+
+Useful flags:
+- filters: `--teamid`, `--opponent-id`, `--matchid`, `--player-id`
+- `--summary`
+- `--only-outcome-change`
+- `--verbosity` (`0`, `1`, `2`)
+- `--no-url`
+- `--multi-buzzer-games`, `--multi-player-games`
+
+Example:
+
+```bash
+uv run bbinsider-buzzerbeater-descriptions --teamid <TEAM_ID> --summary
+```
+
+## Additional Commands
+
+### `bbinsider-team-info`
+Fetch team metadata and first-season estimate.
+
+```bash
+uv run bbinsider-team-info --teamid <TEAM_ID>
+```
+
+### `bbinsider-team-shot-distance-hist`
+Generate 2PT/3PT distance histograms for recent team matches.
+
+Useful flags:
+- `--teamid` (required)
+- `--season` (optional season override)
+- `--count` (number of most recent games)
+- `--bin-width`
+- `--out`
+
+```bash
+uv run bbinsider-team-shot-distance-hist --teamid <TEAM_ID> --count 20
+```
+
+### `bbinsider-shotchart`
+Generate a shot chart image for a shot event type code.
+
+Useful flags:
+- positional `event_type` (integer code)
+- `--out`
+
+```bash
+uv run bbinsider-shotchart 201 --out output/charts/shot_201.png
+```
+
+## Outputs
 
 - Match XML cache: `matches/report_<matchid>.xml`
 - Buzzerbeater DB: `data/buzzerbeaters.db`
-- Generated charts and private exports: `output/`
-- Keep `.env` local and never commit private exports/scrapes.
+- JSON reports: `output/reports/`
+- Charts and other generated files: `output/`
+
+## Privacy
+
+- Keep `.env` local.
+- Do not commit private exports/scrapes.
