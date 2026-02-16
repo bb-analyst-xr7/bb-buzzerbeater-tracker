@@ -212,7 +212,19 @@ def main() -> None:
     parser.add_argument("--auto-first-season", action="store_true", help="Auto-detect first season for current team name")
     parser.add_argument("--from-first-active", action="store_true", help="Start from the first active match of the team")
     parser.add_argument("--db", default="data/buzzerbeaters.db")
-    parser.add_argument("--tui", action="store_true", help="Rich TUI progress")
+    parser.add_argument(
+        "--tui",
+        dest="tui",
+        action="store_true",
+        default=True,
+        help="Rich TUI progress (default)",
+    )
+    parser.add_argument(
+        "--no-tui",
+        dest="tui",
+        action="store_false",
+        help="Disable Rich TUI progress",
+    )
     args = parser.parse_args()
     db_path = Path(args.db)
     db_path.parent.mkdir(parents=True, exist_ok=True)

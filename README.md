@@ -19,14 +19,12 @@ These are the primary tracking commands for buzzerbeaters:
 2. `bbinsider-team-buzzerbeaters`: scan many matches and write/update `data/buzzerbeaters.db`.
 3. `bbinsider-buzzerbeater-descriptions`: read `data/buzzerbeaters.db` and render text/summary output.
 
-Dependency note:
-- Command 3 depends on data created by command 2.
-- Command 1 is an independent single-match check.
-
 ### `bbinsider-buzzerbeaters`
+
 Detect buzzerbeaters in one match.
 
 Useful flags:
+
 - `--matchid` (required)
 - `--details` (show linked shot/free-throw details)
 - `--json`
@@ -38,9 +36,11 @@ uv run bbinsider-buzzerbeaters --matchid <MATCH_ID_WITH_BUZZERBEATER> --details
 ```
 
 ### `bbinsider-team-buzzerbeaters`
+
 Scan team matches and build/update buzzerbeater records in the local DB.
 
 Option guide:
+
 - `--teamid` (required): team to track.
 - Season selection (pick one approach):
   - `--season <S>`: one season only.
@@ -49,9 +49,10 @@ Option guide:
 - `--auto-first-season`: auto-detect the first season for the team name.
   - With no season flags, scans detected-first-season through current season.
   - With `--season-to`, sets the start from detected first season.
-- `--from-first-active`: for the first scanned season, start from the team's first active match instead of all completed matches.
+- `--from-first-active`: for the first scanned season, start from the team's first active match instead of all completed matches. Useful for teams that debuted mid-season.
 - `--db <PATH>`: target SQLite database path (default `data/buzzerbeaters.db`).
-- `--tui`: show Rich progress UI while scanning.
+- `--tui`: show Rich progress UI (default on).
+- `--no-tui`: disable Rich progress UI.
 
 Example (multi-season tracking):
 
@@ -73,9 +74,11 @@ uv run bbinsider-team-buzzerbeaters \
 ```
 
 ### `bbinsider-buzzerbeater-descriptions`
+
 Query the DB and render human-readable buzzerbeater lines and summaries.
 
 Option guide:
+
 - Data source:
   - `--db <PATH>` (default `data/buzzerbeaters.db`)
 - Filters:
@@ -113,9 +116,11 @@ uv run bbinsider-buzzerbeater-descriptions \
 ## Additional Commands
 
 ### `bbinsider`
+
 Parse a single match and print stats/events or export JSON.
 
 Useful flags:
+
 - `--matchid` (required)
 - `--print-events`
 - `--print-stats`
@@ -126,17 +131,12 @@ Useful flags:
 uv run bbinsider --matchid <MATCH_ID> --print-stats --print-events
 ```
 
-### `bbinsider-team-info`
-Fetch team metadata and first-season estimate.
-
-```bash
-uv run bbinsider-team-info --teamid <TEAM_ID>
-```
-
 ### `bbinsider-team-shot-distance-hist`
+
 Generate 2PT/3PT distance histograms for recent team matches.
 
 Useful flags:
+
 - `--teamid` (required)
 - `--season` (optional season override)
 - `--count` (number of most recent games)
@@ -148,24 +148,14 @@ uv run bbinsider-team-shot-distance-hist --teamid <TEAM_ID> --count 20
 ```
 
 ### `bbinsider-shotchart`
+
 Generate a shot chart image for a shot event type code.
 
 Useful flags:
+
 - positional `event_type` (integer code)
 - `--out`
 
 ```bash
 uv run bbinsider-shotchart <SHOT_EVENT_TYPE> --out output/charts/shot_<SHOT_EVENT_TYPE>.png
 ```
-
-## Outputs
-
-- Match XML cache: `matches/report_<matchid>.xml`
-- Buzzerbeater DB: `data/buzzerbeaters.db`
-- JSON reports: `output/reports/`
-- Charts and other generated files: `output/`
-
-## Privacy
-
-- Keep `.env` local.
-- Do not commit private exports/scrapes.
