@@ -2,22 +2,45 @@
 
 CLI tools for extracting match data and tracking buzzerbeaters.
 
-## Setup (once)
+## Setup (Step-by-Step)
 
-1. Install `uv`: https://docs.astral.sh/uv/
-2. Create a local `.env` in repo root:
-   - `BB_USERNAME=...`
-   - `BB_SECURITY_CODE=...`
-3. No extra install needed! Just run commands with with `uv run <command> ...`
-   - Full options for any command: `uv run <command> --help`
+1. Install `uv`: https://docs.astral.sh/uv/getting-started/installation/
+2. Download this project:
+   - Git option:
+
+     ```bash
+     git clone https://github.com/bb-analyst-xr7/bb-events.git
+     cd bb-events
+     ```
+
+   - Alternative: on GitHub click `Code` -> `Download ZIP`, unzip it, then open a terminal in the extracted `bb-events` folder.
+3. In BuzzerBeater, create an access key: `Preferences` -> `Create/Change Access Key`.
+4. Create your local env file:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+5. Edit `.env` and set:
+   - `BB_USERNAME=your-BB-login-username` (no spaces around `=`)
+   - `BB_SECURITY_CODE=your-BB-access-key-security-code` (again, no spaces around `=`)
+6. Run commands with `uv run <command> ...` (no extra install step needed).
+   - Full options: `uv run <command> --help`
 
 ## Main Tracking Workflow (3 commands)
-
-These are the primary tracking commands for buzzerbeaters:
 
 1. `bb-buzzerbeaters`: check one match for buzzerbeaters (read-only, no DB writes).
 2. `bb-team-buzzerbeaters`: scan many matches and write/update `data/buzzerbeaters.db`.
 3. `bb-buzzerbeater-descriptions`: read `data/buzzerbeaters.db` and render text/summary output.
+
+Quick first run:
+
+```bash
+uv run bb-team-buzzerbeaters --teamid <YOUR_TEAM_ID> --from-first-active --auto-first-season --season-to 71
+uv run bb-buzzerbeater-descriptions --teamid <YOUR_TEAM_ID> --summary
+```
+
+Your team ID is the number in your team Overview page URL.
 
 ### `bb-buzzerbeaters`
 
@@ -69,11 +92,7 @@ Starting team buzzerbeater scan for team 142720...
 Loading environment and credentials...
 Authenticating with BB API...
 Auto-detecting first season from team history...
-Resolved seasons to scan: ...
-Resolving first active match in the first scanned season...
-Resolved seasons to scan: 
-9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,
-69,70,71
+Resolved seasons to scan: 9,10,11,...,70,71
 Warning: Buzzerbeaters are currently not tracked in seasons 1-14.
 Resolving first active match in the first scanned season...
 First active match resolved.
@@ -111,10 +130,11 @@ Option guide:
   - `--summary`: append aggregate breakdowns.
   - `--top-players <N>`: top players count in summary.
 - Content filters:
-  - `--only-outcome-change`: only events that changed game state at the buzzer.
+  - `--only-outcome-change`: only Q4/OT events that changed team game state (lead/tie/trail) at the buzzer.
 - Link formatting:
   - `--no-url`: remove forum tags/viewer links from text.
   - `--link-domain {com,org}`: choose link domain suffix (default: `com`).
+  - `--order {asc,desc}`: sort output chronologically (`asc`) or reverse chronologically (`desc`).
 - Special report modes (return immediately with dedicated tables):
   - `--multi-buzzer-games`
   - `--multi-player-games`
@@ -123,6 +143,12 @@ Example:
 
 ```bash
 uv run bb-buzzerbeater-descriptions --teamid 142720 --summary
+```
+
+Reverse chronological output:
+
+```bash
+uv run bb-buzzerbeater-descriptions --teamid 142720 --summary --order desc
 ```
 
 with first lines of output:

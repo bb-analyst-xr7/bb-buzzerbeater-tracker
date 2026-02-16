@@ -157,7 +157,7 @@ def main() -> None:
     parser.add_argument("--opponent-id", type=int, default=None, help="Filter by opponent team id")
     parser.add_argument("--matchid", type=int, default=None, help="Filter by match id")
     parser.add_argument("--player-id", type=int, default=None, help="Filter by player id")
-    parser.add_argument("--only-outcome-change", action="store_true", help="Only buzzerbeaters that flipped to a win")
+    parser.add_argument("--only-outcome-change", action="store_true", help="Only Q4/OT buzzerbeaters that changed team game state (lead/tie/trail)")
     parser.add_argument("--no-url", action="store_true", help="Disable BB forum tags and viewer link")
     parser.add_argument(
         "--link-domain",
@@ -166,6 +166,12 @@ def main() -> None:
         help="Domain suffix for viewer links (default: com)",
     )
     parser.add_argument("--summary", action="store_true", help="Print a summary at the end")
+    parser.add_argument(
+        "--order",
+        choices=("asc", "desc"),
+        default="asc",
+        help="Output order by chronology (default: asc, use desc for reverse chronological)",
+    )
     parser.add_argument(
         "--top-players",
         type=int,
@@ -216,7 +222,14 @@ def main() -> None:
         params.append(args.player_id)
     if filters:
         query += " WHERE " + " AND ".join(filters)
-    query += " ORDER BY match_id"
+
+    order_dir = "DESC" if args.order == "desc" else "ASC"
+    query += (
+        f" ORDER BY COALESCE(season, 0) {order_dir}, "
+        f"match_id {order_dir}, "
+        f"COALESCE(game_clock, 0) {order_dir}, "
+        f"COALESCE(player_id, 0) {order_dir}"
+    )
     cur.execute(query, params)
     rows = cur.fetchall()
     conn.close()
