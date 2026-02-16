@@ -17,11 +17,11 @@ dependencies = [
 bbinsider = "bbinsider.cli:main"
 bbinsider-shotchart = "bbinsider.cli:shotchart"
 bbinsider-buzzerbeaters = "bbinsider.cli:buzzerbeaters"
-bbinsider-normalize-buzzerbeater-periods = "bbinsider.cli:normalize_buzzerbeater_periods"
 bbinsider-team-info = "bbinsider.cli:team_info"
 bbinsider-team-buzzerbeaters = "bbinsider.cli:team_buzzerbeaters"
 bbinsider-debug-ot-buzzers = "bbinsider.cli:debug_ot_buzzers"
 bbinsider-team-shot-distance-hist = "bbinsider.cli:team_shot_distance_hist"
+bbinsider-buzzerbeater-descriptions = "bbinsider.cli:buzzerbeater_descriptions"
 
 [build-system]
 requires = ["uv_build>=0.8.2,<0.9.0"]

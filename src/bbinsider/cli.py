@@ -36,15 +36,6 @@ def buzzerbeaters() -> None:
     module.main()
 
 
-def normalize_buzzerbeater_periods() -> None:
-    # Load root-level normalize_buzzerbeater_periods.py from repo root.
-    module = _load_module(
-        Path.cwd() / "normalize_buzzerbeater_periods.py",
-        "_bbinsider_normalize_buzzerbeater_periods",
-    )
-    module.main()
-
-
 def team_info() -> None:
     # Load root-level team_info.py from repo root.
     module = _load_module(Path.cwd() / "team_info.py", "_bbinsider_team_info")
@@ -71,5 +62,14 @@ def team_shot_distance_hist() -> None:
     module = _load_module(
         Path.cwd() / "team_shot_distance_hist.py",
         "_bbinsider_team_shot_distance_hist",
+    )
+    module.main()
+
+
+def buzzerbeater_descriptions() -> None:
+    # Load root-level buzzerbeater_descriptions.py from repo root.
+    module = _load_module(
+        Path.cwd() / "buzzerbeater_descriptions.py",
+        "_bbinsider_buzzerbeater_descriptions",
     )
     module.main()
