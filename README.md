@@ -59,8 +59,22 @@ uv run bbinsider-team-buzzerbeaters \
   --teamid 142720 \
   --from-first-active \
   --auto-first-season \
-  --season-to <SEASON>
+  --season-to 71
 ```
+
+First output lines:
+
+```text
+Starting team buzzerbeater scan for team 142720...
+Loading environment and credentials...
+Authenticating with BB API...
+Auto-detecting first season from team history...
+Resolved seasons to scan: ...
+Resolving first active match in the first scanned season...
+```
+
+![Season Progress TUI](docs/images/team-buzzerbeaters-tui.png)
+
 
 After this command runs, the DB will have a `buzzerbeaters` table with one row per detected buzzerbeater event, linked to matches/players/opponents. Next, use `bbinsider-buzzerbeater-descriptions` to query and render human-readable summaries (see next section).
 
