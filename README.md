@@ -36,7 +36,7 @@ uv run bbinsider --matchid 123786926 --print-stats --print-events
 4. Generate description text from the DB:
    - `uv run bbinsider-buzzerbeater-descriptions --teamid <TEAM_ID> --summary`
 
-Additional Examples:
+Additional Commands:
 
 - Team metadata lookup:
   - `uv run bbinsider-team-info --teamid <TEAM_ID>`
