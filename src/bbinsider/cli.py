@@ -43,3 +43,9 @@ def normalize_buzzerbeater_periods() -> None:
         "_bbinsider_normalize_buzzerbeater_periods",
     )
     module.main()
+
+
+def team_info() -> None:
+    # Load root-level team_info.py from repo root.
+    module = _load_module(Path.cwd() / "team_info.py", "_bbinsider_team_info")
+    module.main()

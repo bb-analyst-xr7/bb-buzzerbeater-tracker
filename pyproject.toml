@@ -8,6 +8,7 @@ dependencies = [
     "requests",
     "tabulate",
     "Pillow",
+    "beautifulsoup4",
 ]
 
 [project.scripts]
@@ -15,6 +16,7 @@ bbinsider = "bbinsider.cli:main"
 bbinsider-shotchart = "bbinsider.cli:shotchart"
 bbinsider-buzzerbeaters = "bbinsider.cli:buzzerbeaters"
 bbinsider-normalize-buzzerbeater-periods = "bbinsider.cli:normalize_buzzerbeater_periods"
+bbinsider-team-info = "bbinsider.cli:team_info"
 
 [build-system]
 requires = ["uv_build>=0.8.2,<0.9.0"]
