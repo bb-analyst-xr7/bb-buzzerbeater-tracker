@@ -19,7 +19,6 @@ bbinsider-shotchart = "bbinsider.cli:shotchart"
 bbinsider-buzzerbeaters = "bbinsider.cli:buzzerbeaters"
 bbinsider-team-info = "bbinsider.cli:team_info"
 bbinsider-team-buzzerbeaters = "bbinsider.cli:team_buzzerbeaters"
-bbinsider-debug-ot-buzzers = "bbinsider.cli:debug_ot_buzzers"
 bbinsider-team-shot-distance-hist = "bbinsider.cli:team_shot_distance_hist"
 bbinsider-buzzerbeater-descriptions = "bbinsider.cli:buzzerbeater_descriptions"
 
