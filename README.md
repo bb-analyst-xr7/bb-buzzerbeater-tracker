@@ -56,7 +56,7 @@ Main usage (multi-season tracking with auto-detected start):
 
 ```bash
 uv run bbinsider-team-buzzerbeaters \
-  --teamid <TEAM_ID> \
+  --teamid 142720 \
   --from-first-active \
   --auto-first-season \
   --season-to <SEASON>
@@ -68,7 +68,7 @@ Alternatively (explicit range):
 
 ```bash
 uv run bbinsider-team-buzzerbeaters \
-  --teamid <TEAM_ID> \
+  --teamid 142720 \
   --season-from <SEASON_FROM> \
   --season-to <SEASON_TO>
 ```
@@ -101,14 +101,14 @@ Option guide:
 Example:
 
 ```bash
-uv run bbinsider-buzzerbeater-descriptions --teamid <TEAM_ID> --summary
+uv run bbinsider-buzzerbeater-descriptions --teamid 142720 --summary
 ```
 
 Example (compact table export):
 
 ```bash
 uv run bbinsider-buzzerbeater-descriptions \
-  --teamid <TEAM_ID> \
+  --teamid 142720 \
   --verbosity 0 \
   --columns "match_id,player_id,game_clock,period"
 ```
@@ -144,7 +144,7 @@ Useful flags:
 - `--out`
 
 ```bash
-uv run bbinsider-team-shot-distance-hist --teamid <TEAM_ID> --count 20
+uv run bbinsider-team-shot-distance-hist --teamid 142720 --count 20
 ```
 
 ### `bbinsider-shotchart`
@@ -164,4 +164,3 @@ Acknowledgements:
 
 - BBAPI
 - BBInsider
-
