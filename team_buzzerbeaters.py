@@ -210,6 +210,13 @@ def _phase_message(console, message: str) -> None:
         print(message, file=sys.stderr, flush=True)
 
 
+def _warning_message(console, message: str) -> None:
+    if console is not None:
+        console.print(f"[bold yellow]Warning:[/bold yellow] {message}")
+    else:
+        print(f"Warning: {message}", file=sys.stderr, flush=True)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--teamid", type=int, required=True)
@@ -278,6 +285,8 @@ def main() -> None:
         else:
             seasons = [current]
     _phase_message(console, f"Resolved seasons to scan: {','.join(str(s) for s in seasons)}")
+    if any(1 <= s <= 14 for s in seasons):
+        _warning_message(console, "Buzzerbeaters are currently not tracked in seasons 1-14.")
 
     total_hits = 0
     total_inserted = 0

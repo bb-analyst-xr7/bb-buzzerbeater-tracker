@@ -71,6 +71,12 @@ Authenticating with BB API...
 Auto-detecting first season from team history...
 Resolved seasons to scan: ...
 Resolving first active match in the first scanned season...
+Resolved seasons to scan: 
+9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,
+69,70,71
+Warning: Buzzerbeaters are currently not tracked in seasons 1-14.
+Resolving first active match in the first scanned season...
+First active match resolved.
 ```
 
 ![Season Progress TUI](docs/images/team-buzzerbeaters-tui.png)
@@ -118,6 +124,19 @@ Example:
 uv run bbinsider-buzzerbeater-descriptions --teamid 142720 --summary
 ```
 
+with first lines of output:
+
+```text
+uv run bbinsider-buzzerbeater-descriptions --teamid 142720 --summary                                                                                                         
+In season 15, Xeftilaikos [team=142720] hit an away buzzerbeater in LEAGUE.RS.TV [match=29629491] third quarter against fueg0 B.C [team=27726]: Antonio Peña Rubia [player=8350168] hit a two pointer elbow from 18.4 ft as time expired, turning the score from 49–82 to 49–84. [link=https://buzzerbeater.org/match/29629491/reportmatch.aspx?realTime=2155]
+
+In season 15, Xeftilaikos [team=142720] hit an away buzzerbeater in LEAGUE.RS [match=29629553] third quarter against lewntes [team=88703]: Nikos Kastanakis [player=11177319] hit a three pointer wing from 25.7 ft as time expired, turning the score from 53–67 to 53–70. [link=https://buzzerbeater.org/match/29629553/reportmatch.aspx?realTime=2155]
+
+In season 15, Xeftilaikos [team=142720] hit an away buzzerbeater in LEAGUE.SEMIFINAL [match=32604939] regulation against Harlems [team=88881]: Asimakis Kontis [player=11177331] hit a three pointer wing from 24.8 ft as time expired, turning the score from 109–103 to 109–106. [link=https://buzzerbeater.org/match/32604939/reportmatch.aspx?realTime=2875]
+
+In season 15, Xeftilaikos [team=142720] hit an away buzzerbeater in FRIENDLY [match=32829570] regulation against tromponiakos bc [team=27645]: Asimakis Kontis [player=11177331] hit a fade away from 4.9 ft as time expired, turning the score from 67–94 to 67–96. [link=https://buzzerbeater.org/match/32829570/reportmatch.aspx?realTime=2875]
+```
+
 Example (compact table export):
 
 ```bash
@@ -125,6 +144,22 @@ uv run bbinsider-buzzerbeater-descriptions \
   --teamid 142720 \
   --verbosity 0 \
   --columns "match_id,player_id,game_clock,period"
+```
+
+with first lines of output:
+
+```text
+match_id        player_id       game_clock      period
+29629491        8350168 2160    Q3
+29629553        11177319        2160    Q3
+32604939        11177331        2880    Q4
+32829570        11177331        2880    Q4
+32934473        11868055        2880    Q4
+32934481        11977485        720     Q1
+32934497        11977485        720     Q1
+32934505        11977485        2160    Q3
+32934537        11977485        720     Q1
+32934577        11177319        2880    Q4
 ```
 
 ## Additional Commands
