@@ -11,23 +11,17 @@ CLI tools for extracting match data and tracking buzzerbeaters.
 3. Run commands from repo root with `uv run <command> ...`
    - Full options for any command: `uv run <command> --help`
 
-## Core Tracking Commands
+## Main Tracking Workflow (3 commands)
 
-### `bbinsider`
-Parse a single match and print stats/events or export JSON.
+These are the primary tracking commands and how they relate:
 
-Useful flags:
-- `--matchid` (required)
-- `--print-events`
-- `--print-stats`
-- `--verify`
-- `--out` (default: `output/reports/<matchid>.json`)
+1. `bbinsider-buzzerbeaters`: check one match for buzzerbeaters (read-only, no DB writes).
+2. `bbinsider-team-buzzerbeaters`: scan many matches and write/update `data/buzzerbeaters.db`.
+3. `bbinsider-buzzerbeater-descriptions`: read `data/buzzerbeaters.db` and render text/summary output.
 
-Example:
-
-```bash
-uv run bbinsider --matchid 123786926 --print-stats --print-events
-```
+Dependency note:
+- Command 3 depends on data created by command 2.
+- Command 1 is an independent single-match check.
 
 ### `bbinsider-buzzerbeaters`
 Detect buzzerbeaters in one match.
@@ -82,6 +76,20 @@ uv run bbinsider-buzzerbeater-descriptions --teamid <TEAM_ID> --summary
 ```
 
 ## Additional Commands
+
+### `bbinsider`
+Parse a single match and print stats/events or export JSON.
+
+Useful flags:
+- `--matchid` (required)
+- `--print-events`
+- `--print-stats`
+- `--verify`
+- `--out` (default: `output/reports/<matchid>.json`)
+
+```bash
+uv run bbinsider --matchid 123786926 --print-stats --print-events
+```
 
 ### `bbinsider-team-info`
 Fetch team metadata and first-season estimate.
