@@ -947,14 +947,34 @@ def create_shot(
     return ShotPos(x_coord, y_coord)
 
 
-if __name__ == "__main__":
+def shotchart_main():
+    import argparse
+    from pathlib import Path
     from shot_chart import ShotChart
-    import sys
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("event_type", type=int, help="Event type used to generate chart")
+    parser.add_argument(
+        "--out",
+        default=None,
+        help="Output filename (default: output/charts/shot_<event_type>.png)",
+    )
+    args = parser.parse_args()
 
     sc = ShotChart()
 
     for i in range(2880):
-        shot = create_shot(0, int(sys.argv[1]), 51805514, "", i + 1)
+        shot = create_shot(0, args.event_type, 51805514, "", i + 1)
         sc.add_made(shot.x, shot.y)
 
-    sc.save(f"shot_{sys.argv[1]}.png")
+    out_path = (
+        Path(args.out)
+        if args.out
+        else Path("output") / "charts" / f"shot_{args.event_type}.png"
+    )
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    sc.save(str(out_path))
+
+
+if __name__ == "__main__":
+    shotchart_main()

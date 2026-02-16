@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from pathlib import Path
 import requests
 import xml.etree.ElementTree as XML
 from tabulate import tabulate, SEPARATING_LINE
@@ -189,13 +190,23 @@ def main():
     parser.add_argument("--print-stats", action="store_true")
     parser.add_argument("--save-charts", action="store_true")
     parser.add_argument("--verify", action="store_true")
+    parser.add_argument(
+        "--out",
+        default=None,
+        help="Output JSON path (default: output/reports/<matchid>.json)",
+    )
     args = parser.parse_args()
 
     text = get_xml_text(args.matchid)
     events, ht, at = parse_xml(text)
     game = Game(args.matchid, events, ht, at, args, [])
     game.play()
-    game.save(f"{args.matchid}.json")
+    if args.out:
+        out_path = Path(args.out)
+    else:
+        out_path = Path("output") / "reports" / f"{args.matchid}.json"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    game.save(str(out_path))
 
 
 if __name__ == "__main__":
