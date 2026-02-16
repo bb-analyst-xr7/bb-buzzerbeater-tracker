@@ -1,35 +1,41 @@
-# Running BB Insider
+# BB Insider
 
-### Prerequisties
-* Latest Python
-* Python libraries: requests, tabulate and Pillow
+CLI utilities for BuzzerBeater match parsing, buzzerbeater detection, and team-level analysis.
 
-### Windows
-* Install Python and required libraries
-  - Goto https://www.python.org/downloads/ and get download the latest version.
-  - In the installation wizard check option to add python.exe to your PATH.
-  - Open Command Prompt (cmd.exe) and execute following command:
-    - `python.exe -m pip install requests tabulate Pillow`
-* Run the script (still in the Command Prompt)
-  - `cd C:\Users\radszy\bbinsider`
-  - `chcp 65001`
-  - `python.exe main.py --print-stats --print-events --matchid 123786926`
+## Requirements
 
-### Linux
-* Install Python and required libraries
-  - `sudo apt update`
-  - `sudo apt install software-properties-common -y`
-  - `sudo add-apt-repository ppa:deadsnakes/ppa`
-  - `sudo apt install Python3.10`
-  - `python3.10 -m pip install requests tabulate Pillow`
-* Run the script
-  - `cd ~/Downloads/bbinsider`
-  - `python3.10 ./main.py --print-stats --print-events --matchid 123786926`
+- Python 3.10+
+- `uv` (recommended): https://docs.astral.sh/uv/
 
-### Mac
-* Install Python and required libraries
-  - `brew install python`
-  - `python -m pip install requests tabulate Pillow`
-* Run the script
-  - `cd ~/Downloads/bbinsider`
-  - `python ./main.py --print-stats --print-events --matchid 123786926`
+## Quick Start (uv)
+
+1. Install dependencies:
+   - `uv sync`
+2. Create a local `.env` file with:
+   - `BB_USERNAME=...`
+   - `BB_SECURITY_CODE=...`
+3. Run commands with either:
+   - `uv run <command> ...`
+   - `./uv_run.sh <command> ...`
+
+Example:
+
+```bash
+./uv_run.sh bbinsider --matchid 123786926 --print-stats --print-events
+```
+
+## Available Commands
+
+- `bbinsider` - main match parser/output command.
+- `bbinsider-shotchart` - generate a shot chart image from a match.
+- `bbinsider-buzzerbeaters` - detect buzzerbeaters for a match and store/query details.
+- `bbinsider-team-info` - fetch team metadata and first season estimate.
+- `bbinsider-team-buzzerbeaters` - scan team matches across seasons for buzzerbeaters.
+- `bbinsider-debug-ot-buzzers` - debug overtime/period-end buzzer detection logic.
+- `bbinsider-team-shot-distance-hist` - build team shot-distance histograms.
+- `bbinsider-buzzerbeater-descriptions` - render text descriptions from buzzerbeater DB rows.
+
+## Notes
+
+- Runtime output and local data are written under ignored paths (for example `output/` and `data/`).
+- Do not commit `.env` or any private exports/scrapes.
