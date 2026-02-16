@@ -31,7 +31,7 @@ Useful flags:
 - `--details` (show linked shot/free-throw details)
 - `--json`
 
-Known buzzerbeater example:
+Example (use your own match ID that has a buzzerbeater):
 
 ```bash
 uv run bbinsider-buzzerbeaters --matchid <MATCH_ID_WITH_BUZZERBEATER> --details
@@ -88,7 +88,7 @@ Useful flags:
 - `--out` (default: `output/reports/<matchid>.json`)
 
 ```bash
-uv run bbinsider --matchid 123786926 --print-stats --print-events
+uv run bbinsider --matchid <MATCH_ID> --print-stats --print-events
 ```
 
 ### `bbinsider-team-info`
@@ -120,7 +120,7 @@ Useful flags:
 - `--out`
 
 ```bash
-uv run bbinsider-shotchart 201 --out output/charts/shot_201.png
+uv run bbinsider-shotchart <SHOT_EVENT_TYPE> --out output/charts/shot_<SHOT_EVENT_TYPE>.png
 ```
 
 ## Outputs
