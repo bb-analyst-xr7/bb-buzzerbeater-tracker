@@ -9,15 +9,16 @@ CLI utilities for BuzzerBeater match parsing, buzzerbeater detection, and team-l
 
 ## Quick Start (uv)
 
-1. Install dependencies:
-   - `uv sync`
-2. Create a local `.env` file with:
+`uv run` automatically locks/syncs the project and creates `.venv` if needed.
+
+1. Create a local `.env` file with:
    - `BB_USERNAME=...`
    - `BB_SECURITY_CODE=...`
+2. Run a command:
+   - `uv run bbinsider --matchid 123786926 --print-stats --print-events`
 3. Run commands with:
    - `uv run <command> ...`
-4. See command options:
-   - `uv run <command> --help`
+   - See options with: `uv run <command> --help`
 
 Example:
 
